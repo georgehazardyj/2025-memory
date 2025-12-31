@@ -47,13 +47,13 @@
             transition: background 0.5s ease;
         }
 
-        /* --- 标题样式修改 --- */
+        /* --- 标题样式 --- */
         h1 { 
             font-size: 3.4rem; /* 放大 */
             margin-bottom: 1rem; 
             font-weight: 400; 
             line-height: 1.1; 
-            letter-spacing: -1px; /* 紧凑一点防止换行 */
+            letter-spacing: -1px; 
             word-break: keep-all;
             text-align: center;
         }
@@ -113,13 +113,13 @@
         }
         #cover h1 {
             font-family: 'Ma Shan Zheng', cursive; 
-            font-size: 4.5rem; /* 封面特大号 */
+            font-size: 4.5rem; 
             line-height: 1.1;
             color: #2d3436;
             text-shadow: 2px 2px 0px rgba(255,255,255,0.5);
             animation: floatText 3s ease-in-out infinite;
             padding: 0 5px;
-            white-space: nowrap; /* 尽量不换行 */
+            white-space: nowrap; 
         }
         @keyframes floatText {
             0%, 100% { transform: translateY(0); }
@@ -196,10 +196,19 @@
         }
 
         /* 年度词 */
-        #the-word { min-height: 100vh; }
+        /* 年度词 - 修改后确保占满全屏并内容居中 */
+#the-word { 
+    min-height: 100vh; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 垂直居中 */
+    align-items: center;     /* 水平居中 */
+    padding: 0;             /* 去除多余内边距防止撑开 */
+    margin: 0;
+}
         #the-word h1 { 
             font-family: 'Ma Shan Zheng', cursive; 
-            font-size: 6rem; /* 放大 */
+            font-size: 6rem; 
             color: var(--accent-pink); margin: 0; 
             text-shadow: 3px 3px 0px rgba(232, 67, 147, 0.2);
             opacity: 0; transform: scale(3); filter: blur(20px);
@@ -212,20 +221,23 @@
         #the-word.animate h1 { opacity: 1; transform: scale(1); filter: blur(0); }
         #the-word.animate .word-desc-container { opacity: 1; transform: translateY(0); transition-delay: 0.6s; }
         
-        /* --- 翻转卡片 (Persona) 修改区域 --- */
+        /* --- 翻转卡片 (Persona) 修改区域 [关键修改] --- */
         .persona-container { 
-            display: flex; 
-            gap: 10px; 
-            flex-wrap: nowrap; /* 强制不换行，实现并排 */
-            justify-content: space-between; 
+            display: flex;
+            flex-direction: row; /* 明确指定为横向排列 */
+            flex-wrap: nowrap; /* 明确禁止换行，强制在同一行 */
+            gap: 10px; /* 卡片之间的间距 */
+            justify-content: space-between;
+            align-items: stretch; /* 让两个卡片高度保持一致 */
             width: 100%; 
             padding: 0 5px;
         }
 
         .flip-card {
             background-color: transparent;
-            flex: 1; /* 均分宽度 */
-            height: 340px; /* 稍微调高一点点以适应并排的内容 */
+            flex: 1 1 0; /* 让两个卡片平分宽度，并允许在空间不足时收缩 */
+            width: 0; /* 配合 flex: 1 1 0 解决部分浏览器兼容问题 */
+            height: 350px; /* 设定一个固定高度 */
             perspective: 1000px;
             cursor: pointer;
         }
@@ -255,23 +267,23 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start; /* 改为从上到下排列 */
-            padding: 15px 10px; /* 紧凑内边距 */
+            /* 调整内边距以适应窄卡片 */
+            padding: 15px 8px; 
         }
 
         /* 正面样式优化 */
         .flip-card-front {
             background-color: white;
             color: var(--text-color);
-            justify-content: center; /* 正面还是居中 */
+            justify-content: center; 
         }
         .flip-card-front h3 {
-            font-size: 1.3rem; 
+            font-size: 1.2rem; /* 稍微调小字体防止换行 */
             margin: 5px 0 2px;
             font-family: 'Noto Serif SC', serif;
         }
         .role-title {
-            font-size: 0.85rem; 
+            font-size: 0.8rem; /* 稍微调小字体 */
             color: #7f8c8d;
             font-weight: bold;
             line-height: 1.2;
@@ -284,11 +296,11 @@
             animation: bounce 2s infinite;
         }
         .avatar { 
-            height: 60px; width: 60px; /* 缩小头像适配并排 */
+            height: 55px; width: 55px; /* 稍微调小头像 */
             border-radius: 50%; 
             margin: 0 auto 10px; 
             display: flex; align-items: center; justify-content: center; 
-            font-size: 2.2rem; 
+            font-size: 2rem; 
             box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
         }
 
@@ -303,7 +315,7 @@
         .flip-card-back h3 {
             width: 100%;
             text-align: center;
-            font-size: 1.1rem;
+            font-size: 1rem;
             margin-bottom: 10px;
             padding-bottom: 5px;
             border-bottom: 1px solid rgba(255,255,255,0.3);
@@ -314,12 +326,15 @@
             padding: 0;
         }
         .detail-list li {
-            font-size: 0.75rem; /* 调小字体适配窄卡片 */
+            font-size: 0.7rem; /* 调小字体适配窄卡片 */
             margin-bottom: 6px;
             line-height: 1.3;
             background: rgba(255,255,255,0.15);
-            padding: 5px 6px;
+            padding: 4px 5px;
             border-radius: 6px;
+            white-space: nowrap; /* 防止内容换行导致溢出 */
+            overflow: hidden;
+            text-overflow: ellipsis; /* 超出部分显示省略号 */
         }
         /* ------------------------------------- */
         
@@ -455,7 +470,7 @@
             .flip-card-front h3 { font-size: 2.5rem; }
             .role-title { font-size: 1.4rem; }
             .flip-card-back h3 { font-size: 2rem; margin-bottom: 30px;}
-            .detail-list li { font-size: 1.1rem; padding: 10px 15px;}
+            .detail-list li { font-size: 1.1rem; padding: 10px 15px; white-space: normal;}
             .flip-card-front, .flip-card-back { padding: 40px; }
 
             .gallery-scroll { width: 100%; margin: 0; padding: 40px 10%; }
