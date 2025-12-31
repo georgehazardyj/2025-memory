@@ -421,73 +421,103 @@
         .dialogue p { text-align: left; margin-bottom: 1rem; font-size: 1rem;}
         .dialogue strong { color: var(--highlight); font-size: 1.1rem; display: block; margin-bottom: 3px;}
 
-        /* 弹幕 */
-	/* --- 弹幕样式优化 --- */
+        /* --- 弹幕样式优化 (标题沉底版) --- */
 #roast { 
     position: relative; 
-    min-height: 100vh; /* 强制占满全屏高度 */
-    background: linear-gradient(180deg, #fff5f5 0%, #fff0f5 100%); /* 增加一点微弱的渐变 */
+    min-height: 100vh; /* 占满全屏 */
+    background: linear-gradient(180deg, #fff5f5 0%, #fff0f5 100%);
     overflow: hidden; 
     display: flex; 
     flex-direction: column; 
-    justify-content: center; /* 让标题垂直居中 */
-    align-items: center; 
+    justify-content: center; /* 垂直居中 */
+    align-items: center; /* 水平居中 */
     padding: 0;
 }
 
 #roast h2 {
-    z-index: 20; /* 提高层级，保证标题浮在弹幕上方 */
+    /* --- 关键修改：层级沉底 --- */
+    z-index: 0; 
     position: relative;
-    background: rgba(255, 255, 255, 0.85); /* 给标题加个半透明背景 */
-    backdrop-filter: blur(5px);
-    padding: 15px 30px;
-    border-radius: 50px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-    margin-bottom: 0; /* 由 flex 布局控制位置 */
-    border: 1px solid rgba(255,255,255,0.5);
+    
+    /* 视觉样式：做成大号背景字的感觉 */
+    font-size: 3rem; /* 字体放大 */
+    color: rgba(230, 126, 34, 0.3); /* 降低透明度，不抢弹幕视觉 */
+    text-shadow: none;
+    margin: 0;
+    pointer-events: none; /* 让鼠标可以直接穿透标题点击后面的东西（如果有的话） */
+    user-select: none;
 }
 
 .danmaku { 
     position: absolute; 
     white-space: nowrap; 
-    font-size: 1.1rem; /* 字体稍微加大 */
+    font-size: 1.1rem; 
     font-weight: bold; 
     font-family: 'Ma Shan Zheng', cursive; 
     color: var(--text-color); 
-    opacity: 0.9; 
+    opacity: 1; 
     padding: 8px 18px; 
     background: white; 
     border-radius: 30px; 
     box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
     will-change: transform;
-    z-index: 1; /* 弹幕在标题下方 */
+    
+    /* --- 关键修改：层级浮起 --- */
+    z-index: 10; /* 必须比 h2 的 z-index 大 */
 }
 
-/* 动画定义：从右侧屏幕外飞到左侧屏幕外 */
 @keyframes fly { 
     from { transform: translateX(110vw); } 
     to { transform: translateX(-150%); } 
 }
 
-        /* 结尾 (修改对比度) */
-        #wish { 
-            /* 使用更深的背景色以提高对比度 */
-            background: linear-gradient(135deg, #4834d4 0%, #130f40 100%); 
-            color: white; 
-            padding: 4rem 1rem; 
-        }
-        #wish h2 { color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-        #wish p { 
-            color: #ecf0f1; /* 亮白色 */
-            text-shadow: 0 1px 2px rgba(0,0,0,0.5); /* 增加文字阴影提高可读性 */
-            font-weight: 400;
-        }
-        .end-btn { 
-            margin-top: 2rem; padding: 12px 35px; background: white; color: #130f40; 
-            border: none; border-radius: 50px; cursor: pointer; font-size: 1.2rem; 
-            font-weight: bold; box-shadow: 0 10px 25px rgba(0,0,0,0.3); 
-            font-family: 'Noto Serif SC', serif; width: 80%; max-width: 250px;
-        }
+        /* 结尾部分：使用封面同款字体 + 高对比度白色文字 */
+#wish { 
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+    color: #ffffff; /* 强制正文为纯白色 */
+    padding: 6rem 1rem; 
+    text-align: center;
+}
+
+#wish h2, #wish p {
+    font-family: 'Ma Shan Zheng', cursive; /* 封面同款毛笔体 */
+    color: #ffffff !important; /* 确保颜色不被其他样式覆盖 */
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2); /* 增加微弱阴影，提升对比度和立体感 */
+}
+
+#wish h2 { 
+    font-size: 3.5rem; 
+    margin-bottom: 2.5rem;
+    line-height: 1.2;
+}
+
+#wish p {
+    font-size: 1.6rem; 
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+    max-width: 80%; /* 限制宽度让文字更聚拢 */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 结尾按钮：保持高对比度 */
+.end-btn { 
+    margin-top: 3rem; 
+    padding: 15px 45px; 
+    background: #ffffff; /* 纯白背景 */
+    color: #764ba2; /* 深紫色文字 */
+    border: none; 
+    border-radius: 50px; 
+    font-size: 1.2rem; 
+    font-weight: bold; 
+    font-family: 'Noto Serif SC', serif; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transition: transform 0.3s;
+}
+
+.end-btn:active {
+    transform: scale(0.95);
+}
 
         /* 电脑端适配：覆盖上面的手机样式，恢复大屏体验 */
         @media (min-width: 769px) {
@@ -867,24 +897,21 @@
             }
         });
 
-        // --- 弹幕逻辑优化 ---
+        // --- 弹幕逻辑 ---
 const danmakus = document.querySelectorAll('.danmaku');
 
 danmakus.forEach((d) => {
-    // 1. 垂直位置：在 5% 到 92% 之间随机分布，覆盖全屏
-    const topPos = Math.random() * 87 + 5; 
+    // 垂直位置随机分布 (0% - 90%)
+    const topPos = Math.random() * 90; 
     d.style.top = topPos + '%';
     
-    // 2. 颜色随机：增加了一些更活泼的颜色
     const colors = ['#ffeaa7', '#81ecec', '#fab1a0', '#a29bfe', '#dfe6e9', '#fdcb6e', '#ff7675', '#74b9ff'];
     d.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
     
-    // 3. 速度随机：12秒 到 22秒 之间，让速度有快有慢
-    const duration = Math.random() * 10 + 12; 
+    // 速度与延迟随机
+    const duration = Math.random() * 10 + 10; 
     d.style.animation = `fly ${duration}s linear infinite`;
-
-    // 4. 延迟随机：0秒 到 15秒 之间，错开入场时间
-    d.style.animationDelay = Math.random() * 15 + 's';
+    d.style.animationDelay = Math.random() * 8 + 's';
 });
 
         // --- 页面滚动动画逻辑 ---
