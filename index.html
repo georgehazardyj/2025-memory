@@ -422,16 +422,52 @@
         .dialogue strong { color: var(--highlight); font-size: 1.1rem; display: block; margin-bottom: 3px;}
 
         /* 弹幕 */
-        #roast { overflow: hidden; background: #fff5f5; position: relative; min-height: 80vh;}
-        .danmaku { 
-            position: absolute; white-space: nowrap; font-size: 1rem;
-            font-weight: bold; font-family: 'Ma Shan Zheng', cursive; 
-            color: var(--text-color); opacity: 0.8; padding: 5px 12px; 
-            background: white; border-radius: 30px; 
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1); 
-            animation: fly 10s linear infinite; z-index: 10;
-        }
-        @keyframes fly { from { transform: translateX(100vw); } to { transform: translateX(-150%); } }
+	/* --- 弹幕样式优化 --- */
+#roast { 
+    position: relative; 
+    min-height: 100vh; /* 强制占满全屏高度 */
+    background: linear-gradient(180deg, #fff5f5 0%, #fff0f5 100%); /* 增加一点微弱的渐变 */
+    overflow: hidden; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; /* 让标题垂直居中 */
+    align-items: center; 
+    padding: 0;
+}
+
+#roast h2 {
+    z-index: 20; /* 提高层级，保证标题浮在弹幕上方 */
+    position: relative;
+    background: rgba(255, 255, 255, 0.85); /* 给标题加个半透明背景 */
+    backdrop-filter: blur(5px);
+    padding: 15px 30px;
+    border-radius: 50px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    margin-bottom: 0; /* 由 flex 布局控制位置 */
+    border: 1px solid rgba(255,255,255,0.5);
+}
+
+.danmaku { 
+    position: absolute; 
+    white-space: nowrap; 
+    font-size: 1.1rem; /* 字体稍微加大 */
+    font-weight: bold; 
+    font-family: 'Ma Shan Zheng', cursive; 
+    color: var(--text-color); 
+    opacity: 0.9; 
+    padding: 8px 18px; 
+    background: white; 
+    border-radius: 30px; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+    will-change: transform;
+    z-index: 1; /* 弹幕在标题下方 */
+}
+
+/* 动画定义：从右侧屏幕外飞到左侧屏幕外 */
+@keyframes fly { 
+    from { transform: translateX(110vw); } 
+    to { transform: translateX(-150%); } 
+}
 
         /* 结尾 (修改对比度) */
         #wish { 
@@ -831,14 +867,25 @@
             }
         });
 
-        // --- 弹幕逻辑 ---
-        const danmakus = document.querySelectorAll('.danmaku');
-        danmakus.forEach(d => {
-            d.style.top = Math.random() * 70 + 10 + '%';
-            const colors = ['#ffeaa7', '#81ecec', '#fab1a0', '#a29bfe', '#dfe6e9'];
-            d.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-            d.style.animationDuration = Math.random() * 5 + 8 + 's';
-        });
+        // --- 弹幕逻辑优化 ---
+const danmakus = document.querySelectorAll('.danmaku');
+
+danmakus.forEach((d) => {
+    // 1. 垂直位置：在 5% 到 92% 之间随机分布，覆盖全屏
+    const topPos = Math.random() * 87 + 5; 
+    d.style.top = topPos + '%';
+    
+    // 2. 颜色随机：增加了一些更活泼的颜色
+    const colors = ['#ffeaa7', '#81ecec', '#fab1a0', '#a29bfe', '#dfe6e9', '#fdcb6e', '#ff7675', '#74b9ff'];
+    d.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    
+    // 3. 速度随机：12秒 到 22秒 之间，让速度有快有慢
+    const duration = Math.random() * 10 + 12; 
+    d.style.animation = `fly ${duration}s linear infinite`;
+
+    // 4. 延迟随机：0秒 到 15秒 之间，错开入场时间
+    d.style.animationDelay = Math.random() * 15 + 's';
+});
 
         // --- 页面滚动动画逻辑 ---
         document.addEventListener('DOMContentLoaded', () => {
