@@ -432,22 +432,41 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
-        /* 背面样式优化 */
+	/* 背面样式优化 */
         .flip-card-back {
             color: white;
             transform: rotateY(180deg);
             text-align: left;
             align-items: flex-start;
-            padding-top: 20px;
+            padding-top: 25px; /* 稍微增加顶部空间 */
         }
 
         .flip-card-back h3 {
             width: 100%;
             text-align: center;
-            font-size: 1rem;
-            margin-bottom: 10px;
-            padding-bottom: 5px;
+            font-size: 1.3rem; /* 这里从 1rem 改大了 */
+            margin-bottom: 15px;
+            padding-bottom: 8px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            font-family: 'Noto Serif SC', serif;
+        }
+
+        .detail-list {
+            list-style: none;
+            width: 100%;
+            padding: 0;
+        }
+
+        .detail-list li {
+            font-size: 0.95rem; /* 这里从 0.7rem 改大了，更清晰 */
+            margin-bottom: 8px;
+            line-height: 1.4;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 6px 8px;
+            border-radius: 6px;
+            /* 关键修改：允许自动换行，防止字号变大后内容显示不全 */
+            white-space: normal; 
+            overflow: visible;
         }
 
         .detail-list {
@@ -909,7 +928,11 @@
     <section id="cover">
         <h1>生活多可爱呀</h1>
         <p class="quote" style="margin-top: 30px; font-weight: normal;">记录者：Jane & George </p>
-        <div class="scroll-indicator">⌄</div>
+        
+        <div class="scroll-indicator" style="display: flex; flex-direction: column; align-items: center;">
+            <span style="font-size: 0.9rem; font-family: 'Noto Serif SC', serif; letter-spacing: 3px; margin-bottom: 2px; opacity: 0.8;">下滑开启回忆</span>
+            <span style="font-size: 2.2rem; line-height: 1;">⌄</span>
+        </div>
     </section>
 
     <section id="origin">
@@ -983,8 +1006,13 @@
         <h2>年度霸屏词</h2>
         <h1>感恩</h1>
         <div class="word-desc-container">
-            <p>这一年，我们在日记里说了超过 200 次“感恩”。</p>
-            <p>“感恩袁健皓的存在”、“感恩Jane的陪伴”、“感恩面夫子阿姨”...</p>
+            <p style="font-family: 'Noto Serif SC', serif; color: #2d3436; margin-bottom: 0.5rem; letter-spacing: 0.5px;">
+                这一年，我们在日记里说了超过 <span style="color: #e84393; font-weight: bold;">200</span> 次“感恩”。
+            </p>
+            
+            <p style="font-family: 'Noto Serif SC', serif; color: #7f8c8d; font-style: italic; letter-spacing: 1px; opacity: 0.9;">
+                “感恩袁健皓的存在”、“感恩Jane的陪伴”、“感恩面夫子阿姨”...
+            </p>
         </div>
     </section>
 
