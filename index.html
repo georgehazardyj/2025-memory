@@ -47,24 +47,27 @@
             transition: background 0.5s ease;
         }
 
-        /* 标题样式 */
+        /* --- 标题样式修改 --- */
         h1 { 
-            font-size: 2.8rem; 
+            font-size: 3.4rem; /* 放大 */
             margin-bottom: 1rem; 
             font-weight: 400; 
-            line-height: 1.2; 
-            word-break: break-word;
+            line-height: 1.1; 
+            letter-spacing: -1px; /* 紧凑一点防止换行 */
+            word-break: keep-all;
+            text-align: center;
         }
         
         h2 { 
-            font-size: 1.6rem; 
-            margin-bottom: 2rem; 
+            font-size: 2.2rem; /* 放大 */
+            margin-bottom: 2.5rem; 
             color: var(--highlight); 
             text-align: center; 
             font-family: 'Noto Serif SC', serif; 
             font-weight: 700;
-            line-height: 1.4; 
+            line-height: 1.3; 
             width: 100%; 
+            letter-spacing: -0.5px;
         }
 
         p { 
@@ -110,12 +113,13 @@
         }
         #cover h1 {
             font-family: 'Ma Shan Zheng', cursive; 
-            font-size: 3.2rem; 
+            font-size: 4.5rem; /* 封面特大号 */
             line-height: 1.1;
             color: #2d3436;
             text-shadow: 2px 2px 0px rgba(255,255,255,0.5);
             animation: floatText 3s ease-in-out infinite;
             padding: 0 5px;
+            white-space: nowrap; /* 尽量不换行 */
         }
         @keyframes floatText {
             0%, 100% { transform: translateY(0); }
@@ -179,7 +183,7 @@
         .keyword-card.george-style { border-left-color: var(--accent-blue); }
         .keyword-card.george-style .k-title { color: var(--accent-blue); }
         .k-title {
-            font-size: 1.2rem; font-weight: bold; margin-bottom: 5px;
+            font-size: 1.3rem; font-weight: bold; margin-bottom: 5px;
             font-family: 'Ma Shan Zheng', cursive; letter-spacing: 1px;
         }
         .k-quote {
@@ -192,10 +196,10 @@
         }
 
         /* 年度词 */
-        #the-word { min-height: 80vh; }
+        #the-word { min-height: 100vh; }
         #the-word h1 { 
             font-family: 'Ma Shan Zheng', cursive; 
-            font-size: 5rem; 
+            font-size: 6rem; /* 放大 */
             color: var(--accent-pink); margin: 0; 
             text-shadow: 3px 3px 0px rgba(232, 67, 147, 0.2);
             opacity: 0; transform: scale(3); filter: blur(20px);
@@ -208,20 +212,20 @@
         #the-word.animate h1 { opacity: 1; transform: scale(1); filter: blur(0); }
         #the-word.animate .word-desc-container { opacity: 1; transform: translateY(0); transition-delay: 0.6s; }
         
-        /* --- 翻转卡片 (Persona) 关键修改区域 --- */
+        /* --- 翻转卡片 (Persona) 修改区域 --- */
         .persona-container { 
             display: flex; 
-            gap: 8px; /* 缩小间距 */
-            flex-wrap: wrap; 
-            justify-content: center; 
+            gap: 10px; 
+            flex-wrap: nowrap; /* 强制不换行，实现并排 */
+            justify-content: space-between; 
             width: 100%; 
+            padding: 0 5px;
         }
 
         .flip-card {
             background-color: transparent;
-            width: 46vw; /* 调整宽度，确保两列并排 (46*2 + 8 < 100) */
-            max-width: 400px;
-            height: 380px; /* 调整高度，使其紧凑 */
+            flex: 1; /* 均分宽度 */
+            height: 340px; /* 稍微调高一点点以适应并排的内容 */
             perspective: 1000px;
             cursor: pointer;
         }
@@ -234,7 +238,7 @@
             transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             transform-style: preserve-3d;
             box-shadow: 0 10px 20px rgba(0,0,0,0.08);
-            border-radius: 15px;
+            border-radius: 12px;
         }
 
         .flip-card.flipped .flip-card-inner {
@@ -247,42 +251,44 @@
             height: 100%;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
-            border-radius: 15px;
+            border-radius: 12px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 15px; /* 缩小内边距 */
+            justify-content: flex-start; /* 改为从上到下排列 */
+            padding: 15px 10px; /* 紧凑内边距 */
         }
 
         /* 正面样式优化 */
         .flip-card-front {
             background-color: white;
             color: var(--text-color);
+            justify-content: center; /* 正面还是居中 */
         }
         .flip-card-front h3 {
-            font-size: 1.4rem; /* 缩小字体 */
-            margin: 10px 0 5px;
+            font-size: 1.3rem; 
+            margin: 5px 0 2px;
             font-family: 'Noto Serif SC', serif;
         }
         .role-title {
-            font-size: 0.9rem; /* 缩小字体 */
+            font-size: 0.85rem; 
             color: #7f8c8d;
             font-weight: bold;
             line-height: 1.2;
+            margin-bottom: 0;
         }
         .hint {
             margin-top: auto;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: #bdc3c7;
             animation: bounce 2s infinite;
         }
         .avatar { 
-            height: 70px; width: 70px; /* 缩小头像 */
+            height: 60px; width: 60px; /* 缩小头像适配并排 */
             border-radius: 50%; 
-            margin: 0 auto 15px; 
+            margin: 0 auto 10px; 
             display: flex; align-items: center; justify-content: center; 
-            font-size: 2.5rem; 
+            font-size: 2.2rem; 
             box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
         }
 
@@ -292,13 +298,15 @@
             transform: rotateY(180deg);
             text-align: left;
             align-items: flex-start;
+            padding-top: 20px;
         }
         .flip-card-back h3 {
             width: 100%;
             text-align: center;
-            font-size: 1.2rem; /* 缩小字体 */
-            margin-bottom: 15px;
-            padding-bottom: 8px;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
         }
         .detail-list {
             list-style: none;
@@ -306,11 +314,11 @@
             padding: 0;
         }
         .detail-list li {
-            font-size: 0.8rem; /* 缩小字体 */
-            margin-bottom: 8px;
-            line-height: 1.4;
+            font-size: 0.75rem; /* 调小字体适配窄卡片 */
+            margin-bottom: 6px;
+            line-height: 1.3;
             background: rgba(255,255,255,0.15);
-            padding: 6px 8px;
+            padding: 5px 6px;
             border-radius: 6px;
         }
         /* ------------------------------------- */
@@ -410,19 +418,29 @@
         }
         @keyframes fly { from { transform: translateX(100vw); } to { transform: translateX(-150%); } }
 
-        /* 结尾 */
-        #wish { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 4rem 1rem; }
-        #wish h2 { color: white; }
+        /* 结尾 (修改对比度) */
+        #wish { 
+            /* 使用更深的背景色以提高对比度 */
+            background: linear-gradient(135deg, #4834d4 0%, #130f40 100%); 
+            color: white; 
+            padding: 4rem 1rem; 
+        }
+        #wish h2 { color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        #wish p { 
+            color: #ecf0f1; /* 亮白色 */
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5); /* 增加文字阴影提高可读性 */
+            font-weight: 400;
+        }
         .end-btn { 
-            margin-top: 2rem; padding: 12px 35px; background: white; color: #764ba2; 
-            border: none; border-radius: 50px; cursor: pointer; font-size: 1.1rem; 
-            font-weight: bold; box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
+            margin-top: 2rem; padding: 12px 35px; background: white; color: #130f40; 
+            border: none; border-radius: 50px; cursor: pointer; font-size: 1.2rem; 
+            font-weight: bold; box-shadow: 0 10px 25px rgba(0,0,0,0.3); 
             font-family: 'Noto Serif SC', serif; width: 80%; max-width: 250px;
         }
 
         /* 电脑端适配：覆盖上面的手机样式，恢复大屏体验 */
         @media (min-width: 769px) {
-            h1 { font-size: 4.5rem; }
+            h1 { font-size: 5rem; }
             h2 { font-size: 2.8rem; }
             #cover h1 { font-size: 7rem; }
             section { padding: 4rem 2rem; }
@@ -431,8 +449,8 @@
             .k-title { font-size: 1.5rem; }
             
             /* 恢复PC端卡片样式 */
-            .persona-container { gap: 40px; }
-            .flip-card { width: 450px; max-width: none; height: 500px; }
+            .persona-container { gap: 40px; justify-content: center; }
+            .flip-card { width: 450px; max-width: none; height: 500px; flex: none; }
             .avatar { width: 140px; height: 140px; font-size: 4rem; margin-bottom: 30px;}
             .flip-card-front h3 { font-size: 2.5rem; }
             .role-title { font-size: 1.4rem; }
@@ -465,7 +483,7 @@
 
     <section id="cover">
         <h1>生活多可爱呀</h1>
-        <p class="quote" style="margin-top: 30px; font-weight: normal;">记录者：Jane & George (袁健皓)</p>
+        <p class="quote" style="margin-top: 30px; font-weight: normal;">记录者：Jane & George </p>
         <div class="scroll-indicator">⌄</div>
     </section>
 
@@ -555,15 +573,15 @@
                         <div class="avatar" style="background: #fab1a0;">🐷</div>
                         <h3>Jane</h3>
                         <p class="role-title">感性的生活哲学家</p>
-                        <p class="hint">👇 点击查看隐藏属性</p>
+                        <p class="hint">👇 点击查看</p>
                     </div>
                     <div class="flip-card-back" style="background: #fab1a0;">
                         <h3>Jane 的 B 面</h3>
                         <ul class="detail-list">
-                            <li>💤 <strong>核心技能：</strong>能在菜市场般的宿舍熟睡</li>
-                            <li>📖 <strong>爱好：</strong>阅读纯文学与听播客</li>
-                            <li>😈 <strong>隐藏属性：</strong>自称“女色狼”</li>
-                            <li>💖 <strong>口头禅：</strong>“生活多可爱呀！”</li>
+                            <li>💤 <strong>技能：</strong>菜市场熟睡</li>
+                            <li>📖 <strong>爱好：</strong>阅读&播客</li>
+                            <li>😈 <strong>属性：</strong>“女色狼”</li>
+                            <li>💖 <strong>口头禅：</strong>生活多可爱呀</li>
                         </ul>
                     </div>
                 </div>
@@ -575,15 +593,15 @@
                         <div class="avatar" style="background: #74b9ff;">🐷</div>
                         <h3>George</h3>
                         <p class="role-title">热血 AI 理工男</p>
-                        <p class="hint">👇 点击查看隐藏属性</p>
+                        <p class="hint">👇 点击查看</p>
                     </div>
                     <div class="flip-card-back" style="background: #74b9ff;">
                         <h3>George 的 B 面</h3>
                         <ul class="detail-list">
-                            <li>💻 <strong>核心技能：</strong>用 Gemini 写代码 & 做题</li>
+                            <li>💻 <strong>技能：</strong>Gemini 刷题</li>
                             <li>⚽ <strong>爱好：</strong>踢球 & 跑步</li>
-                            <li>🧨 <strong>隐藏属性：</strong>学院行政吐槽役</li>
-                            <li>🤖 <strong>口头禅：</strong>“感谢科技！”</li>
+                            <li>🧨 <strong>属性：</strong>行政吐槽役</li>
+                            <li>🤖 <strong>口头禅：</strong>感谢科技！</li>
                         </ul>
                     </div>
                 </div>
